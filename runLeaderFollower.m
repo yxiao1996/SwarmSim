@@ -4,7 +4,7 @@ close all;
 % generate map for the simulation
 size = 15;
 resolution = 10;
-numObstacles = 1;
+numObstacles = 0;
 space = 5;
 p = zeros(size*resolution);
 map_gen = MapGenerate(size,size,space,resolution);
@@ -15,7 +15,8 @@ end
 map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
-numRobots = 5;
+form = VShapeFormation();
+numRobots = form.numRobots;
 numSensors = 5;
 sensorRange = 2.5;
 showTraj = false;
@@ -33,7 +34,7 @@ for i = 1:numRobots
 end
 swarmInfo = SwarmInfo(numRobots,robotInfos,initial_poses,false);
 %% leader-follower simulation
-sim = LeaderFollowerSimulation(map,swarmInfo);
+sim = LeaderFollowerSimulation(map,swarmInfo,form);
 for i = 1:500
     sim = sim.step();
     axis([0 14 0 14])

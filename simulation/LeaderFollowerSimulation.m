@@ -3,11 +3,12 @@ classdef LeaderFollowerSimulation < simulation
     % A Leader-Follower formation control simulation
     
     properties
+        form
         numFollowers
     end
     
     methods
-        function obj = LeaderFollowerSimulation(map,swarmInfo)
+        function obj = LeaderFollowerSimulation(map,swarmInfo,form)
             %LEADERFOLLOWERSIMULATION 
             obj.sampleTime = 0.05;
             obj.numRobots = swarmInfo.numRobots;
@@ -20,8 +21,12 @@ classdef LeaderFollowerSimulation < simulation
             leader_wps = planPRM(map,leader_pose,leader_goal);
             obj.controllers{1} = DiffDrivePursueWayPoints(leader_wps);
             % assign controller for the followers
-            type="dphi"; params.d = 1; params.phi = 0;
+            obj.form = form;%LineFormation();
+            %type="dphi"; params.d = 1; params.phi = 0;
             for i = 2:obj.numRobots
+                type = obj.form.getType(i);
+                %leadIdx = form.getIdx(i);
+                params = obj.form.getParam(i);
                 obj.controllers{i} = DiffDriveFollower(type,params);
             end
             % assign actuators
@@ -57,7 +62,9 @@ classdef LeaderFollowerSimulation < simulation
             % control the followers
             for i = 2:obj.numRobots
                 ctl = obj.controllers{i};
-                lead = poses(:,i-1);
+                %lead = poses(:,i-1);
+                leadIdx = obj.form.getIdx(i);
+                lead = poses(:,leadIdx);
                 pose = poses(:,i);
                 controls{i} = ctl.compute_control(pose,lead);
             end

@@ -11,8 +11,8 @@ classdef DiffDrivePursueWayPoints < control
             obj.controller = robotics.PurePursuit;
             obj.controller.Waypoints = waypoints;
             obj.controller.LookaheadDistance = 0.35;
-            obj.controller.DesiredLinearVelocity = 1.0;
-            obj.controller.MaxAngularVelocity = 1.5;
+            obj.controller.DesiredLinearVelocity = 0.6;
+            obj.controller.MaxAngularVelocity = 1.0;
         end
         
         function control = compute_control(obj,pose,readings)

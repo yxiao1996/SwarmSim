@@ -1,6 +1,8 @@
-classdef DiffDriveFollower < control
-    %DIFFDRIVEFOLLOWER 
-    % controller for followers in the leader-follower method
+classdef OmniDirFollower < control
+    %OMNIDIRFOLLOWER 
+    % a controller for followers in leader-follower
+    % formation control
+    % omni-directional dynamics
     
     properties
         type % [d,d] or [d,phi] formation
@@ -10,8 +12,8 @@ classdef DiffDriveFollower < control
     end
     
     methods
-        function obj = DiffDriveFollower(type,params)
-            %DIFFDRIVEFOLLOWER 
+        function obj = OmniDirFollower(type,params)
+            %OMNIDIRFOLLOWER 
             valid_type = ["dd";"dphi"];
             if (~ismember(type,valid_type))
                 msg = "follwer controller: invalid formation type";
@@ -47,24 +49,7 @@ classdef DiffDriveFollower < control
             d_y = y_l - y;
             theta_l = angle(d_x + 1j*d_y);
             d_phi = theta_l - (theta+obj.phi);
-            if (abs(d_phi) < phi_thresh) % ok to match d
-                control.wRef = 0;
-                d = sqrt(d_x^2 + d_y^2);
-                if (d > obj.d1-delta)&&(d < obj.d1+delta)
-                    control.vRef = 0;
-                elseif (d >= obj.d1+delta)
-                    control.vRef = v;
-                else
-                    control.vRef = -v;
-                end
-            else % match phi to leader first
-                control.vRef = 0;
-                if (d_phi > 0)
-                    control.wRef = w;
-                else
-                    control.wRef = -w;
-                end
-            end
+            
         end
     end
 end
