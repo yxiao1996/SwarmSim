@@ -64,14 +64,11 @@ classdef LeaderFollowerSimulation < simulation
                 ctl = obj.controllers{i};
                 type = obj.form.getType(i);
                 leadIdx = obj.form.getIdx(i);
+                lead = poses(:,leadIdx);
                 pose = poses(:,i);
                 if (strcmp(type,"dphi"))
-                    lead = poses(:,leadIdx);
-                    controls{i} = ctl.compute_control(pose,lead,[0;0;0]);
-                elseif (strcmp(type,"dd"))
-                    lead1 = poses(:,leadIdx(1));
-                    lead2 = poses(:,leadIdx(2));
-                    controls{i} = ctl.compute_control(pose,lead1,lead2);
+                    controls{i} = ctl.compute_control(pose,lead);
+                elseif (strcmp
                 end
             end
         end
