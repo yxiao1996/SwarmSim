@@ -8,10 +8,10 @@ numObstacles = 3;
 space = 5;
 %p = zeros(size*resolution);
 map_gen = MapGenerate(size,size,space,resolution);
-%p = map_gen.addRandomObstacle(3,2);
+[p,map_gen] = map_gen.addBounds(2);
 for i = 1:numObstacles
     %p = add_random_circle(p);
-    [p,map_gen] = map_gen.addRandomObstacle(1.5,0.5);
+    [p,map_gen] = map_gen.addRandomObstacle(1.0,0.5);
 end
 map = robotics.OccupancyGrid(p,resolution);
 

@@ -53,7 +53,9 @@ classdef DiffDriveFollower < control
             d_1 = obj.d1; d_2 = obj.d2; d_3 = d_l;
             % transform from d-d to d-phi
             d_ = obj.compute_dm(d_1,d_2,d_3);
-            
+            psi = obj.compute_psi(d_2,d_3,d_);
+            xi = obj.compute_xi(x,y,x_l2,y_l2);
+            phi_ = obj.add_angle(psi,xi);
             control = obj.compute_dphi(pose,lead,d_,0);
         end
         
@@ -95,6 +97,23 @@ classdef DiffDriveFollower < control
             dm = sqrt(dm_sqr);
         end
 
+        function psi = compute_psi(obj,d2,d3,dm)
+            cos_psi = (dm^2+d2^2-(d3/2)^2)/(2*dm*d2);
+            psi = acos(cos_psi);
+        end
+        
+        function xi = compute_xi(obj,x,y,x2,y2)
+            vec = [x2-x;y2-y];
+            norm = sqrt(dot(vec,vec));
+            e = vec / norm;
+            xi = angle(e(1)+1j*e(2));
+        end
+        
+        function s = add_angle(obj,a1,a2)
+            e1 = cos(a1)+1j*sin(a1);
+            e2 = cos(a2)+1j*sin(a2);
+            s = angle(e1*e2);
+        end
     end
 end
 

@@ -20,6 +20,20 @@ classdef MapGenerate
             obj.resol = resol; % resolution of the map
         end
         
+        function [occupy,obj] = addBounds(obj,s)
+            % add boundary to the occupancy grid
+            x_max = size(obj.occupy,1);
+            y_max = size(obj.occupy,2);
+            for i = 1:x_max
+                for j = 1:y_max
+                    if ((i<=s) || (i>=x_max-s) || (j<=s) || (j>=y_max-s))
+                        obj.occupy(i,j) = 1;
+                    end
+                end
+            end
+            occupy = obj.occupy;
+        end
+        
         function [occupy,obj] = addRandomObstacle(obj,max_size,min_size)
             for t = 1:10 % try 10 times
                 size = min_size + rand*(max_size-min_size);

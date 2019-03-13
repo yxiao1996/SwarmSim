@@ -6,16 +6,16 @@ size = 15;
 resolution = 10;
 numObstacles = 0;
 space = 5;
-p = zeros(size*resolution);
+%p = zeros(size*resolution);
 map_gen = MapGenerate(size,size,space,resolution);
-%p = map_gen.addRandomObstacle(3,2);
+[p,map_gen] = map_gen.addBounds(2);
 for i = 1:numObstacles
     [p,map_gen] = map_gen.addRandomObstacle(1.5,0.5);
 end
 map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
-form = DiamondFormation();%VShapeFormation();
+form = DiamondFormation();
 numRobots = form.numRobots;
 numSensors = 5;
 sensorRange = 2.5;
@@ -37,6 +37,6 @@ swarmInfo = SwarmInfo(numRobots,robotInfos,initial_poses,false);
 sim = LeaderFollowerSimulation(map,swarmInfo,form);
 for i = 1:500
     sim = sim.step();
-    axis([0 14 0 14])
+    axis([0 size 0 size])
     pause(0.02);
 end
