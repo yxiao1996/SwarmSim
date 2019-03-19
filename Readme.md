@@ -5,25 +5,46 @@ This environment will implment three kinds of multi-robot control strategies on 
 Control strategy: virtual structure, behavior-based control, leader-follower control. 
 Dynamics: differential drive dynamics, omni-directional dynamics. 
 
+### Introduction
+
+There are wo theoretical views on the control of multiple robot systems: centralized systems and decentralized systems. 
+
+In a centralized system, a central unit is responsible for making decision for indivisuals and monitoring the accomplishment of the missoin. Communication only happen between central unit and indibisual, not between individuals. 
+
+In a decentralized system, indivisuals can communicate with each other and share information. Each indiviual is responsible for a portion of the global mission. 
+
+Virtual structure[2] is an exmample of control strategy for a centralized system, where a central unit is controling the motion of all robots in the system. 
+
+Behavior-based strategy[3] is used for decentralized system. Each robot have an inner finite state machine. The states in the fsm correspond to different motor schemas. During running time, the robot switching among different motor schemas(through switching among states) to accomplish its individual goal. 
+
+Leader-follower strategy[4][5] is a hybrid of centralized and decentralized systems. The leader is controlled by central unit, while the followers operate on there own using sensor data. 
+
+### Information
 prerequisite:
 1. All code wrote and tested with Matlab 2018a
 2. Please install the Mobile Robotics Simulation Toolbox from Matlab before running any simulation.
    
 Reference:
 1. Mobile Robotics Simulation Toolbox: https://www.mathworks.com/matlabcentral/fileexchange/66586-mobile-robotics-simulation-toolbox
+2. M. Anthony Lewis, Kar-Han Tan. High Precision Formation Control of Mobile Robots Using Virtual Structures. Autonomous Robots, 1997.
+3. Tucker Balch, Ronald C. Arkin. Behavior-Based Formation Control for Multirobot Teams. IEEE Transactions on Robotics and Automation, 1998.
+4. Luca Cosolini, Fabio Morbidi, Domenico Prattichizzo, Mario Tosques. Leader-follower formation control of nonholonomic mobile robots with input constraints.
+5. Jaydev P. Desai, James P. Ostrowski, Vijay Kumar. Modeling and Control of Formations of Nonholonomic Mobile Robot. IEEE Transactions on Robotics and Automation, 2001.
    
+### DEMOs
+
 virtial-structure control with 3 differential drive robots
 
-<img src="imgs/vs_3.webp" height=300>
+<img src="imgs/vs_3.webp" height=400>
 
 behavior-based control with 3 differential drive robots
 
-<img src="imgs/bb_0.webp" height=300>
+<img src="imgs/bb_0.webp" height=400>
 
 leader-follower control in V-shape with 3 differential drive robots
 
-<img src="imgs/lf_v.webp" height=300>
+<img src="imgs/lf_v.webp" height=400>
 
 leader-follower control in Diamond-shape with 3 differential drive robots
 
-<img src="imgs/lf_d.webp" height=300>
+<img src="imgs/lf_d.webp" height=400>

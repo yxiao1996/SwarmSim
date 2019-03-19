@@ -15,7 +15,7 @@ end
 map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
-form = DiamondFormation();
+form = TriangleFormation;%DiamondFormation();
 numRobots = form.numRobots;
 numSensors = 5;
 sensorRange = 2.5;
