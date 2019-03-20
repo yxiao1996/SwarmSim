@@ -33,18 +33,26 @@ Reference:
    
 ### DEMOs
 
-virtial-structure control with 3 differential drive robots
+1.virtial-structure control with 3 differential drive robots
 
 <img src="imgs/vs_3.webp" height=400>
 
-behavior-based control with 3 differential drive robots
+2.virtial-structure control with 6 omni-directional drive robots
+
+<img src="imgs/vs_5.webp" height=400>
+
+3.behavior-based control with 3 differential drive robots(state machine)
 
 <img src="imgs/bb_0.webp" height=400>
 
-leader-follower control in V-shape with 3 differential drive robots
+4.behavior-based control with 5 differential drive robots(motor schemas blend)
+
+<img src="imgs/bb_5.webp" height=400>
+
+5.leader-follower control in V-shape with 3 differential drive robots
 
 <img src="imgs/lf_v.webp" height=400>
 
-leader-follower control in Diamond-shape with 3 differential drive robots
+6.leader-follower control in Diamond-shape with 3 differential drive robots
 
 <img src="imgs/lf_d.webp" height=400>
