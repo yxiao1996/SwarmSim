@@ -18,7 +18,7 @@ classdef BehaviorBasedSimulation < simulation
             robotInfos = swarmInfo.infos;
             for i = 1:obj.numRobots
                 robotInfo = robotInfos{i};
-                obj.controllers{i} = DiffDriveBehaviorBased(robotInfo,goal);
+                obj.controllers{i} = DiffDriveBehaviorBasedBlend(robotInfo,goal);
             end
             % assign actuator to each robot
             obj.actuators = cell(1,obj.numRobots);

@@ -27,11 +27,25 @@ classdef RangeFinders
             % compute the direction to avoid wall
             % reads = obj.fill_nan(raw_reads);
             sensor_sum = [0 0];
+            reads = obj.discard_back(reads);
             for i = 1:obj.numSensors-1
                 read = reads(i);
                 sensor_sum = sensor_sum + obj.es(i,:).*read;
             end
             direction = sensor_sum ./ (obj.numSensors-1);
+        end
+        
+        function new_reads = discard_back(obj,reads)
+            new_reads = zeros(size(reads));
+            s1 = floor(obj.numSensors/4);
+            s2 = ceil(obj.numSensors*3/4);
+            for i = 1:obj.numSensors 
+                if (i <=s1 || i >=s2)
+                    new_reads(i) = obj.max_range;
+                else
+                    new_reads(i) = reads(i);
+                end
+            end
         end
         
         function filled_reads = fill_nan(obj,raw_reads)

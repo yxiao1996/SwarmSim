@@ -37,8 +37,11 @@ classdef MapGenerate
         function [occupy,obj] = addRandomObstacle(obj,max_size,min_size)
             for t = 1:10 % try 10 times
                 size = min_size + rand*(max_size-min_size);
-                if(rand>0.5)
+                n = rand;
+                if(n>1.0)
                     type = "triangle";
+                elseif(n>0.5)
+                    type = "hexagon";
                 else
                     type = "circle";
                 end
@@ -62,8 +65,11 @@ classdef MapGenerate
             if (type == "circle")
                 new_obst = Circle(xy,size);
             elseif (type == "triangle")
-                rand_angle = rand*3/pi;
+                rand_angle = rand*pi/3;
                 new_obst = Triangle(xy,size,rand_angle);
+            elseif (type == "hexagon")
+                rand_angle = rand*pi/6;
+                new_obst = Hexagon(xy,size,rand_angle);
             end
             bound = new_obst.bound_box;
             l = bound(1); t = bound(2); r = bound(3); b = bound(4);

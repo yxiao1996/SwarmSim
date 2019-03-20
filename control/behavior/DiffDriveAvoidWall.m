@@ -21,13 +21,24 @@ classdef DiffDriveAvoidWall < control
         
         function control = compute_control(obj,pose,direc)
             %compute control to avoid walls
-            theta = angle(direc(2)+1j*direc(1));
-            k = 0.5;
-            if (theta > 0)
-                wRef = theta*k; %0.5;
+            phi = angle(direc(1)+1j*direc(2));
+            if (phi>pi/2)||(phi<-pi/2)
+                if(phi<0)    
+                    theta = angle(direc(2)+1j*direc(1));
+                else
+                    theta = angle(direc(2)-1j*direc(1));
+                end
             else
-                wRef = theta*k; %-0.5;
+                theta = 0;
             end
+            if(theta>0 && theta < 5*pi/6)
+                theta = theta + pi/6;
+            end
+            if(theta<0 && theta > -5*pi/6)
+                theta = theta - pi/6;
+            end
+            k = 0.8;
+            wRef = theta*k;
             control.vRef = 0.5;
             control.wRef = wRef;
         end
