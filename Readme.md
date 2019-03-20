@@ -5,6 +5,12 @@ This environment will implment three kinds of multi-robot control strategies on 
 Control strategy: virtual structure, behavior-based control, leader-follower control. 
 Dynamics: differential drive dynamics, omni-directional dynamics. 
 
+TODO:
+
+1.add formation to behavior=-based control; 
+2.try reinforcement learning on bahavior-based model;
+
+
 ### Introduction
 
 There are wo theoretical views on the control of multiple robot systems: centralized systems and decentralized systems. 
