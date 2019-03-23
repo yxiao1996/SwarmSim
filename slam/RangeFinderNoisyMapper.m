@@ -9,6 +9,9 @@ classdef RangeFinderNoisyMapper
         count
         angles
         es
+        Rt  % state trainsitoin noise covariance
+        Qt  % observation noice covariance
+        filters % a collections of kalman filters
     end
     
     methods
@@ -17,6 +20,7 @@ classdef RangeFinderNoisyMapper
             obj.points = zeros(numPoints,2);
             obj.n = numPoints;
             obj.count = 0;
+            numRobots = swarmInfo.numRobots;
             numSensors = swarmInfo.infos{1}.numSensors;
             obj.angles = linspace(-pi,pi,numSensors);
             sensorRange = swarmInfo.infos{1}.sensorRange;
@@ -27,22 +31,37 @@ classdef RangeFinderNoisyMapper
                 obj.es(i,:) = [cos(theta),sin(theta)];
             end
             
+            obj.Rt = diag([0.01 0.01 0.01]);
+            obj.Qt = diag([0.1 0.1 0.1]);
+            obj.filters = cell(1,numRobots);
+            for i = 1:numRobots
+                init_pose = swarmInfo.poses(:,i);
+                kf = KalmanFilterDiffDrive(init_pose);
+                obj.filters{i} = kf;
+            end
         end
         
-        function obj = addPoints(obj,pose,readings,mask)
+        function obj = addPoints(obj,pose,readings,mask,control,idx)
             % insert new points into the map
             % based on range finder readings and mask computed by robot
             % detectors
             numReads = size(readings,1); 
-            theta = pose(3)+randn*0.1;
-            t = pose(1:2)+(randn(2,1)*0.1);
+            pose = pose + obj.Qt*randn(3,1); % add observation noise
+            % update kalman filter
+            u = [control.vRef;control.wRef];
+            filt = obj.filters{idx};
+            [filt,pose] = filt.step(u,pose);
+            obj.filters{idx} = filt;
+            % transform the points
+            theta = pose(3);
+            t = pose(1:2);
             R = [
               cos(theta) -sin(theta);
               sin(theta) cos(theta)
             ];
-            
+            % add valid points to map
             for i = ceil(numReads/4):ceil(numReads*3/4)
-                read = readings(i)+randn*0.1;
+                read = readings(i);
                 if (~isnan(read) && mask(i)~=0)
                     e = squeeze(obj.es(i,:))*read;
                     new_point = R*e' + t;

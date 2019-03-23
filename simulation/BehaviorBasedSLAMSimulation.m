@@ -54,7 +54,7 @@ classdef BehaviorBasedSLAMSimulation < simulation
             masks = obj.detect_phase();
             readings = obj.sensor_phase();
             %poses = obj.world.get_poses();
-            obj = obj.mapping_phase(poses,readings,masks);
+            obj = obj.mapping_phase(poses,readings,masks,controls);
         end
         
          function controls = control_phase(obj,readings)
@@ -79,12 +79,13 @@ classdef BehaviorBasedSLAMSimulation < simulation
              end
          end
          
-         function obj = mapping_phase(obj,poses,readings,masks)
+         function obj = mapping_phase(obj,poses,readings,masks,controls)
              for i = 1:obj.numRobots
                 reading = readings{i};
                 mask = masks{i};
                 pose = squeeze(poses(:,i));
-                obj.mapper = obj.mapper.addPoints(pose,reading,mask);
+                control = controls{i};
+                obj.mapper = obj.mapper.addPoints(pose,reading,mask,control,i);
              end
              
          end
