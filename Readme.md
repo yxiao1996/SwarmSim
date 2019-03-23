@@ -66,3 +66,7 @@ Reference:
 7.behavior-based mapping with three differential robots
 
 <img src="imgs/behavior-based-mapping.png" height=400>
+
+8.behavior-based mapping with Gaussian noise added to odometry and robot detectors.
+
+<img src="imgs/noisy-mapping2.PNG" height=400>

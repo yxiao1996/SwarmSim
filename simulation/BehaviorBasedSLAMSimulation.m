@@ -42,7 +42,7 @@ classdef BehaviorBasedSLAMSimulation < simulation
             obj.physics = AABB(map,swarmInfo.numRobots,0.25,true);
             obj.prev_poses = swarmInfo.poses;
             % add mapper
-            obj.mapper = RangeFinderMapper(10000,swarmInfo);
+            obj.mapper = RangeFinderNoisyMapper(10000,swarmInfo);
         end
         
         function obj = step(obj)
