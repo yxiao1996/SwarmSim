@@ -8,6 +8,7 @@ classdef world
         sensorRange% maximum range of sensing
         poses      % current poses of each robot
         sensors    % sensor information of each robot
+        detectors  % robot detector of each robot
     end
     
     methods
@@ -22,13 +23,23 @@ classdef world
             obj.env.robotRadius = 0.25;
             obj.env.mapName = 'map';
             obj.sensors = cell(1,obj.numRobots);
+            obj.detectors = cell(1,obj.numRobots);
             for i = 1:obj.numRobots
                 robotInfo = swarmInfo.infos{i};
+                % associate range finders for each robot
                 lidar = LidarSensor;
                 lidar.scanAngles = linspace(-pi,pi,robotInfo.numSensors);
                 lidar.maxRange = robotInfo.sensorRange;
                 attachLidarSensor(obj.env,i,lidar); % associate lidar with map
                 obj.sensors{i} = lidar;
+                % associate robot detector of each robot
+                detector = RobotDetector(obj.env,i);
+                detector.sensorOffset = [0 0];
+                detector.sensorAngle = 0;
+                detector.fieldOfView = 2*pi;  % full range robot detection
+                detector.maxRange = robotInfo.sensorRange;
+                detector.maxDetections = obj.numRobots-1; % maximum number of detections
+                obj.detectors{i} = detector;
             end
             
             obj.poses = poses; % initial poses
@@ -51,6 +62,16 @@ classdef world
                 lidar = obj.sensors{i};
                 scans = lidar(obj.poses(:,i));
                 ranges{i} = scans;
+            end
+        end
+        
+        function detections = readDetections(obj)
+            % read robot detection result [numDetections, 3] [range angle idx]
+            detections = cell(1,obj.numRobots);
+            for i = 1:obj.numRobots
+                detector = obj.detectors{i};
+                detection = step(detector);
+                detections{i} = detection;
             end
         end
         
