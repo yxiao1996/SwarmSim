@@ -17,10 +17,10 @@ map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
 numRobots = 3;
-numSensors = 25;
-sensorRange = 2;
+numSensors = 20;
+sensorRange = 5;
 showTraj = false;
-initial_poses = 8*(rand(3,numRobots).*[0.5;0.5;0]) + [0.5;0.5;0];
+initial_poses = 5*(rand(3,numRobots).*[0.5;0.5;0]) + [0.5;0.5;0];
 robotInfos = cell(1,numRobots);
 for i = 1:numRobots
     t = "DiffDrive"; % differential drive dynamics
@@ -35,7 +35,7 @@ end
 swarmInfo = SwarmInfo(numRobots,robotInfos,initial_poses,false);
 %% virtual structure simulation
 sim = BehaviorBasedSLAMSimulation(map,swarmInfo);
-for i = 1:400
+for i = 1:800
     sim = sim.step();
     axis([0 15 0 15])
     %pause(0.02);

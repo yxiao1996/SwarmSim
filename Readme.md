@@ -62,3 +62,7 @@ Reference:
 6.leader-follower control in Diamond-shape with 3 differential drive robots
 
 <img src="imgs/lf_d.webp" height=400>
+
+7.behavior-based mapping with three differential robots
+
+<img src="imgs/behavior-based-mapping.png" height=400>

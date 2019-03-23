@@ -20,7 +20,7 @@ classdef BehaviorBasedSLAMSimulation < simulation
             robotInfos = swarmInfo.infos;
             for i = 1:obj.numRobots
                 robotInfo = robotInfos{i};
-                obj.controllers{i} = DiffDriveBehaviorBasedBlend(robotInfo,goal);
+                obj.controllers{i} = DiffDriveBehaviorBased(robotInfo,goal);
             end
             % assign actuator to each robot
             obj.actuators = cell(1,obj.numRobots);
@@ -52,6 +52,8 @@ classdef BehaviorBasedSLAMSimulation < simulation
             obj = obj.physics_phase(poses);
             obj.visualize_();
             masks = obj.detect_phase();
+            readings = obj.sensor_phase();
+            %poses = obj.world.get_poses();
             obj = obj.mapping_phase(poses,readings,masks);
         end
         

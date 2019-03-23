@@ -41,7 +41,7 @@ classdef RangeFinderMapper
               sin(theta) cos(theta)
             ];
             
-            for i = ceil(numReads/3):ceil(numReads*2/3)
+            for i = ceil(numReads/4):ceil(numReads*3/4)
                 read = readings(i);
                 if (~isnan(read) && mask(i)~=0)
                     e = squeeze(obj.es(i,:))*read;

@@ -43,18 +43,48 @@ classdef RobotDetectors
                     r = obj.swarmInfo.infos{id}.body_width/2;
                     phi = detections(j,2);
                     range = detections(j,1);
-                    psi = asin(r/range);
-                    delta = pi/12;
-                    if (theta>(phi-psi-delta) && theta<(phi+psi+delta))
+                    if (r>range)
                         blocked = true;
+                        break;
+                    end
+                    psi = asin(r/range);
+                    delta = pi/24;
+                    %b = obj.checkBetween(theta,phi,psi); 
+                    %if (b==true)
+                    if(theta>=(phi-psi-delta) && theta<=(phi+psi+delta))
+                        blocked = true;
+                        break;
                     end
                 end
                 if(blocked == true)
                     mask(i) = 0;
+                    if(i>1)
+                        mask(i-1) = 0;
+                    end
+                    if(i<numSensors)
+                        mask(i+1) = 0;
+                    end
                 end
             end
             %disp(mask);
         end
+        
+        function b = checkBetween(obj,a,a1,a2)
+            % check if a is between a1 and a2
+            % construct complex number on unit circle
+            v_a = cos(a)+1j*sin(a);
+            v_a1 = cos(a1)+1j*sin(a1);
+            v_a2 = cos(a2)+1j*sin(a2);
+            d1 = angle(v_a/(v_a1*v_a2));
+            d2 = angle(v_a/(v_a1/v_a2));
+            disp(d1*d2);
+            if (d1*d2<0)
+                b = true;
+            else
+                b = false;
+            end
+        end
+        
     end
 end
 
