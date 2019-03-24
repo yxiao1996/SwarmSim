@@ -71,6 +71,6 @@ Reference:
 
 <img src="imgs/noisy-mapping2.PNG" height=400>
 
-9. behavior-based mapping with Gaussain noise added on odometry. Vanilla Kalman filter is implemented to estimate the real pose from noisy odometry data.
+9.behavior-based mapping with Gaussain noise added on odometry. Vanilla Kalman filter is implemented to estimate the real pose from noisy odometry data.
 
 <img src="imgs/noisy-mapping-kf.PNG" height=400>

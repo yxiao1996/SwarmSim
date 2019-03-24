@@ -1,4 +1,4 @@
-classdef BehaviorBasedSLAMSimulation < simulation
+classdef BehaviorBasedMappingSimulation < simulation
     %BEHAVIORBASEDSIMULATION 
     % A simulation for robots navigation using behavior-based method
     
@@ -8,7 +8,7 @@ classdef BehaviorBasedSLAMSimulation < simulation
     end
     
     methods
-        function obj = BehaviorBasedSLAMSimulation(map,swarmInfo)
+        function obj = BehaviorBasedMappingSimulation(map,swarmInfo)
             %BEHAVIORBASEDSIMULATION 
             % construct the simulation
             obj.sampleTime = 0.05;
@@ -42,7 +42,7 @@ classdef BehaviorBasedSLAMSimulation < simulation
             obj.physics = AABB(map,swarmInfo.numRobots,0.25,true);
             obj.prev_poses = swarmInfo.poses;
             % add mapper
-            obj.mapper = RangeFinderNoisyMapper(10000,swarmInfo);
+            obj.mapper = RangeFinderMapper(10000,swarmInfo);
         end
         
         function obj = step(obj)
@@ -85,7 +85,7 @@ classdef BehaviorBasedSLAMSimulation < simulation
                 mask = masks{i};
                 pose = squeeze(poses(:,i));
                 control = controls{i};
-                obj.mapper = obj.mapper.addPoints(pose,reading,mask,control,i);
+                obj.mapper = obj.mapper.addPoints(pose,reading,mask);
              end
              
          end

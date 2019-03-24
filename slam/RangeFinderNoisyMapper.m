@@ -12,10 +12,11 @@ classdef RangeFinderNoisyMapper
         Rt  % state trainsitoin noise covariance
         Qt  % observation noice covariance
         filters % a collections of kalman filters
+        trig
     end
     
     methods
-        function obj = RangeFinderNoisyMapper(numPoints,swarmInfo)
+        function obj = RangeFinderNoisyMapper(numPoints,swarmInfo,flt)
             %RANGEFINDERMAPPER 
             obj.points = zeros(numPoints,2);
             obj.n = numPoints;
@@ -39,6 +40,7 @@ classdef RangeFinderNoisyMapper
                 kf = KalmanFilterDiffDrive(init_pose);
                 obj.filters{i} = kf;
             end
+            obj.trig = flt;
         end
         
         function obj = addPoints(obj,pose,readings,mask,control,idx)
@@ -48,10 +50,12 @@ classdef RangeFinderNoisyMapper
             numReads = size(readings,1); 
             pose = pose + obj.Qt*randn(3,1); % add observation noise
             % update kalman filter
-            u = [control.vRef;control.wRef];
-            filt = obj.filters{idx};
-            [filt,pose] = filt.step(u,pose);
-            obj.filters{idx} = filt;
+            if(obj.trig)
+                u = [control.vRef;control.wRef];
+                filt = obj.filters{idx};
+                [filt,pose] = filt.step(u,pose);
+                obj.filters{idx} = filt;
+            end
             % transform the points
             theta = pose(3);
             t = pose(1:2);

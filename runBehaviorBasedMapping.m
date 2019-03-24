@@ -34,7 +34,7 @@ for i = 1:numRobots
 end
 swarmInfo = SwarmInfo(numRobots,robotInfos,initial_poses,false);
 %% virtual structure simulation
-sim = BehaviorBasedSLAMSimulation(map,swarmInfo);
+sim = BehaviorBasedMappingSimulation(map,swarmInfo);
 for i = 1:800
     sim = sim.step();
     axis([0 15 0 15])
