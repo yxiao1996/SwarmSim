@@ -29,6 +29,11 @@ Leader-follower strategy[4][5] is a hybrid of centralized and decentralized syst
 prerequisite:
 1. All code wrote and tested with Matlab 2018a
 2. Please install the Mobile Robotics Simulation Toolbox from Matlab before running any simulation.
+
+* MATLAB Libraries already included(huge thanks to authors)
+1. error_ellipse(draw ellipse given mean and covariance)
+2. icp(point set mathcing algorithm)
+3. munkres(hungarian algorithm)
    
 Reference:
 1. Mobile Robotics Simulation Toolbox: https://www.mathworks.com/matlabcentral/fileexchange/66586-mobile-robotics-simulation-toolbox
