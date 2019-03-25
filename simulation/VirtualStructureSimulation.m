@@ -10,6 +10,7 @@ classdef VirtualStructureSimulation < simulation
         controller_vs % controller for the virtual structure
         actuator_vs   % actuator for the virtual structure
         deadzone_radius
+        hPlot
     end
     
     methods
@@ -72,6 +73,7 @@ classdef VirtualStructureSimulation < simulation
             %disp(vs_points);
             % control robot to follow virtual structure
             reach_flag = false;
+            %hold on
             while(~reach_flag)
                 targets = obj.assign_target(vs_points);
                 controls = obj.control_phase(readings,targets);
@@ -81,7 +83,8 @@ classdef VirtualStructureSimulation < simulation
                 reach_flag = obj.check_reach(poses,targets);
             end
             hold on;
-            obj.draw_VS(vs_points);hold off;
+            delete(obj.hPlot);
+            obj.hPlot = obj.draw_VS(vs_points);hold off;
         end
         
         function controls = control_phase(obj,readings,targets)
@@ -112,16 +115,17 @@ classdef VirtualStructureSimulation < simulation
             [R,t] = icp(xy,obj.VS);
         end
         
-        function draw_VS(obj,vs_pose)
+        function hPlot = draw_VS(obj,vs_pose)
             vs_pose = vs_pose';
+            hPlot = zeros(obj.numRobots,1);
             for i = 1:obj.numRobots-1
                 p1 = vs_pose(:,i);
                 p2 = vs_pose(:,i+1);
-                plot([p1(1) p2(1)],[p1(2) p2(2)],'LineWidth',2);
+                hPlot(i) = plot([p1(1) p2(1)],[p1(2) p2(2)],'LineWidth',2);
             end
             p1 = vs_pose(:,obj.numRobots);
             p2 = vs_pose(:,1);
-            plot([p1(1) p2(1)],[p1(2) p2(2)],'LineWidth',2);
+            hPlot(obj.numRobots) = plot([p1(1) p2(1)],[p1(2) p2(2)],'LineWidth',2);
         end
         
         function R = compute_SO2(obj,a)

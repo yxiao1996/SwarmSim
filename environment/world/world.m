@@ -9,6 +9,8 @@ classdef world
         poses      % current poses of each robot
         sensors    % sensor information of each robot
         detectors  % robot detector of each robot
+        cameras    % landmark sensor of each robot
+        landmarks  % land marks in the environment
     end
     
     methods
@@ -19,11 +21,13 @@ classdef world
             poses = swarmInfo.poses;
             obj.numRobots = numRobots;
             obj.env = MultiRobotEnv(obj.numRobots);
+            obj.env.hasWaypoints = true;
             obj.env.showTrajectory = showTraj;
             obj.env.robotRadius = 0.25;
             obj.env.mapName = 'map';
             obj.sensors = cell(1,obj.numRobots);
             obj.detectors = cell(1,obj.numRobots);
+            obj.cameras = cell(1,obj.numRobots);
             for i = 1:obj.numRobots
                 robotInfo = swarmInfo.infos{i};
                 % associate range finders for each robot
@@ -40,8 +44,12 @@ classdef world
                 detector.maxRange = robotInfo.sensorRange;
                 detector.maxDetections = obj.numRobots-1; % maximum number of detections
                 obj.detectors{i} = detector;
+                % associate landmark detector of each robot
+                camera = ObjectDetector;
+                camera.fieldOfView = 2*pi/3;
+                attachObjectDetector(obj.env,i,camera);
+                obj.cameras{i} = camera;
             end
-            
             obj.poses = poses; % initial poses
         end
         
@@ -53,6 +61,14 @@ classdef world
         function poses = get_poses(obj)
             % update current poses
             poses = obj.poses;
+        end
+        
+        function obj = addLandmarks(obj,data)
+            % add landmarks into the world
+            obj.landmarks = data;
+            numLandmarks = size(data,1);
+            color = rand(numLandmarks,3);
+            obj.env.objectColors = color;
         end
         
         function ranges = readSensors(obj)
@@ -75,9 +91,22 @@ classdef world
             end
         end
         
+        function landmarks = readCameras(obj)
+            % read landmark detection results
+            landmarks = cell(1,obj.numRobots);
+            for i = 1:obj.numRobots
+                camera = obj.cameras{i};
+                landmark = camera(obj.poses(:,i),obj.landmarks);
+                landmarks{i} = landmark;
+            end
+        end
+        
         function visualize(obj,ranges)
             % visualize sensor readings at current poses
-            obj.env(1:obj.numRobots,obj.poses,ranges);
+            %obj.env(1:obj.numRobots,obj.poses,ranges,obj.landmarks);
+            for i = 1:obj.numRobots
+                obj.env(i,obj.poses(:,i),[2 2;12 12],ranges{i},obj.landmarks);
+            end
         end
     end
 end
