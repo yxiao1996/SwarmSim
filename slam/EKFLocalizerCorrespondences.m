@@ -17,10 +17,10 @@ classdef EKFLocalizerCorrespondences
             obj.mu = x;
             obj.Sigma = Sigma;
             obj.R = diag([0.01 0.01 0.01]);%zeros(3);
-            obj.Q = diag([0.1 0.1 0.0001]);
+            obj.Q = diag([0.1 0.1 0.001]);
         end
         
-        function [obj,mu,Sigma] = step(obj,ut,landmark)
+        function [obj,mu,Sigma] = step(obj,ut,landmark,pose)
             %landmark(:,1:2) = landmark(:,1:2) + randn(size(landmark(:,1:2)))*obj.Q(1:2,1:2);
             [mu_bar,Sigma_bar] = obj.predict(ut);
             mu = mu_bar;
@@ -36,22 +36,29 @@ classdef EKFLocalizerCorrespondences
                 delta_x = obj.map(j,1)-mu_bar(1);
                 delta_y = obj.map(j,2)-mu_bar(2);
                 delta = [delta_x;delta_y];
+                delta_ = [obj.map(j,1)-pose(1);obj.map(j,2)-pose(2)];
+                zt_real_i = [
+                    sqrt(delta_'*delta_);
+                    obj.angle_diff(atan2(delta_(2),delta_(1)), pose(3));
+                ];
                 q = delta'*delta;
                 zt_hat_i = [
                     sqrt(q);
-                    atan2(delta_y,delta_x) - mu_bar(3);
+                    %atan2(delta_y,delta_x) - mu_bar(3);
+                    obj.angle_diff(atan2(delta_y,delta_x),mu_bar(3));
                     obj.map(j,3)
                 ];
                 Ht_i = [
-                    sqrt(q)*delta_x -sqrt(q)*delta_y 0;
-                    delta_y         delta_x          -1;
-                    0               0                0 
+                    -sqrt(q)*delta_x -sqrt(q)*delta_y 0;
+                    delta_y         -delta_x          -1
+                    %0               0                0 
                 ]/q;
-                Kt_i = Sigma_bar*Ht_i'/(Ht_i*Sigma_bar*Ht_i' + obj.Q);
+                Kt_i = Sigma_bar*Ht_i'/(Ht_i*Sigma_bar*Ht_i' + obj.Q(1:2,1:2));
                 disp("*")
-                disp(zt_i-zt_hat_i);
+                disp(zt_hat_i(1:2)-zt_real_i);
+                %disp(delta-delta_);
                 %if(~sum(isnan(Kt_i)))
-                %mu = mu + Kt_i*(zt_i-zt_hat_i);
+                %mu = mu + Kt_i*(zt_i(1:2)-zt_hat_i(1:2));
                 Sigma = Sigma - Kt_i*Ht_i*Sigma_bar;
                 %end
             end
@@ -65,18 +72,27 @@ classdef EKFLocalizerCorrespondences
             theta = obj.mu(3);
             mu_bar = obj.mu + ...
                 [
-                  cos(theta)*v*dt;%-(v/w)*sin(theta) + (v/w)*sin(theta+w*dt);
-                  sin(theta)*v*dt;%(v/w)*cos(theta) - (v/w)*cos(theta+w*dt);
+                  cos(theta)*v*dt;%
+                  %-(v/w)*sin(theta) + (v/w)*sin(theta+w*dt);
+                  sin(theta)*v*dt;%
+                  %(v/w)*cos(theta) - (v/w)*cos(theta+w*dt);
                   w*dt
                 ];
             Gt = [
-              1 0 -v*sin(theta)*dt;%(v/w)*cos(theta) - (v/w)*cos(theta+w*dt);
-              0 1 v*cos(theta)*dt;%(v/w)*sin(theta) - (v/w)*sin(theta+w*dt);
+              1 0 -v*sin(theta)*dt;%
+              %1 0 (v/w)*cos(theta) - (v/w)*cos(theta+w*dt);
+              0 1 v*cos(theta)*dt;%
+              %0 1 (v/w)*sin(theta) - (v/w)*sin(theta+w*dt);
               0 0 1
             ];
             %disp(v/w)
             %disp(Gt);
             Sigma_bar = Gt*obj.Sigma*Gt' + obj.R;
+        end
+        
+        function a = angle_diff(obj,a1,a2)
+            v = (cos(a1)+1j*sin(a1)) / (cos(a2)+1j*sin(a2));
+            a = angle(v);
         end
         
     end

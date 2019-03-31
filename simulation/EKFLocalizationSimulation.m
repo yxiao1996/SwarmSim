@@ -53,9 +53,10 @@ classdef EKFLocalizationSimulation < simulation
         function obj = step(obj)
             readings = obj.sensor_phase();
             controls = obj.control_phase(readings);
-            obj = obj.localize_phase(controls);
+            
             poses = obj.actuate_phase_(controls);
             obj = obj.physics_phase(poses);
+            obj = obj.localize_phase(controls);
             obj.visualize_();
             
         end
@@ -65,13 +66,15 @@ classdef EKFLocalizationSimulation < simulation
             hold on
             delete(obj.hPlot);
             hPlot_ = zeros(obj.numRobots,1);
+            poses = obj.world.get_poses();
             for i = 1:obj.numRobots
                 control = controls{i};
                 ut = [control.vRef;control.wRef];
                 landmark = landmarks{i};
                 %disp(size(landmark));
                 localizer = obj.localizers{i};
-                [localizer,mu,Sigma] = localizer.step(ut,landmark);
+                pose = poses(:,i);
+                [localizer,mu,Sigma] = localizer.step(ut,landmark,pose);
                 disp(Sigma);
                 obj.localizers{i} = localizer;
                 hPlot_(i) = obj.draw_ellipse(mu,Sigma);

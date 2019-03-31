@@ -5,23 +5,22 @@ close all;
 size = 15;
 resolution = 10;
 numObstacles = 0;
-numLandmarks = 6;
 space = 5;
 %p = zeros(size*resolution);
 map_gen = MapGenerate(size,size,space,resolution);
 [p,map_gen] = map_gen.addBounds(2);
 for i = 1:numObstacles
-    %p = add_random_circle(p);
-    [p,map_gen] = map_gen.addRandomObstacle(1.0,0.5);
+    [p,map_gen] = map_gen.addRandomObstacle(1.5,0.5);
 end
 map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
-numRobots = 2;
-numSensors = 25;
-sensorRange = 2;
+form = VShapeFormation();
+numRobots = form.numRobots;
+numSensors = 5;
+sensorRange = 2.5;
 showTraj = false;
-initial_poses = 5*(rand(3,numRobots).*[0.5;0.5;0]) + [0.5;0.5;0];
+initial_poses = 8*(rand(3,numRobots).*[0.5;0.5;0]) + [0.5;0.5;0];
 robotInfos = cell(1,numRobots);
 for i = 1:numRobots
     t = "DiffDrive"; % differential drive dynamics
@@ -34,10 +33,10 @@ for i = 1:numRobots
     robotInfos{i} = robotInfo;
 end
 swarmInfo = SwarmInfo(numRobots,robotInfos,initial_poses,false);
-%% extended Kalman filter localization simulation
-sim = EKFLocalizationSimulation(map,swarmInfo,numLandmarks);
-for i = 1:1000
+%% leader-follower simulation
+sim = LeaderFollowerNoisySimulation(map,swarmInfo,form);
+for i = 1:500
     sim = sim.step();
-    axis([0 15 0 15])
+    axis([0 size 0 size])
     pause(0.02);
 end
