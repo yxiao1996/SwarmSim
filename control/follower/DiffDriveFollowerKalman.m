@@ -44,6 +44,7 @@ classdef DiffDriveFollowerKalman < control
             % estimate pose for control in next step
             ut = [control.vRef;control.wRef]; 
             [obj.filter,obj.pose] = obj.filter.step(ut,raw_pose);
+            %obj.pose = raw_pose;
         end
         
         function control = compute_dd(obj,pose,lead1,lead2)

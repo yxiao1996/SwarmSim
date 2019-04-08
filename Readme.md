@@ -83,3 +83,8 @@ Reference:
 10.localization using extended Kalman filter with correspondences of landmarks
 
 <img src="imgs/ekf_local.webp" height=400>
+
+11.left: Leader-follower formation with additive Gaussian noise. right: Leader-follower with additive Gaussian noise,estimating individual pose using Kalman filter.
+
+<img src="imgs/lf_noise.webp" height=300>
+<img src="imgs/lf_kal.webp" height=300>
