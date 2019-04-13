@@ -61,8 +61,8 @@ classdef EKFLocalizerCorrespondences
                     obj.map(j,3)
                 ];
                 Ht_i = [
-                    -sqrt(q)*delta_x -sqrt(q)*delta_y 0;
-                    delta_y         -delta_x          -1
+                    sqrt(q)*delta_x -sqrt(q)*delta_y 0;
+                    delta_y         delta_x          -1
                     %0               0                0 
                 ]/q;
                 Kt_i = Sigma_bar*Ht_i'/(Ht_i*Sigma_bar*Ht_i' + obj.Q(1:2,1:2));

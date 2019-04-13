@@ -88,3 +88,7 @@ Reference:
 
 <img src="imgs/lf_noise.webp" height=300>
 <img src="imgs/lf_kal.webp" height=300>
+
+12EKF SLAM: simutaniously localization and mapping based on extended Kalman filter. 
+
+<img src="imgs/ekf_slam.webp" height=400>
