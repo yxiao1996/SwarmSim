@@ -4,7 +4,6 @@ classdef EKFLocalizationSimulation < simulation
     
     properties
         localizers
-        hPlot
     end
     
     methods

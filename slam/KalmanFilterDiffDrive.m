@@ -20,11 +20,12 @@ classdef KalmanFilterDiffDrive
             obj.Q = diag([0.1 0.1 0.1]);
         end
         
-        function [obj,mu_pred] = step(obj,ut,zt)
+        function [obj,mu_pred,Sigma_pred] = step(obj,ut,zt)
             % step the kalman filter with control and measurement
             [mu_bar,Sigma_bar] = obj.predict(ut);
             obj = obj.update(mu_bar,Sigma_bar,zt);
             mu_pred = obj.mu;
+            Sigma_pred = obj.Sigma;
         end
         
         function [mu_bar,Sigma_bar] = predict(obj,ut)

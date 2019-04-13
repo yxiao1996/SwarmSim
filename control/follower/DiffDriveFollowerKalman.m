@@ -34,7 +34,7 @@ classdef DiffDriveFollowerKalman < control
             obj.filter = KalmanFilterDiffDrive(pose);
         end
         
-        function [obj,control] = compute_control(obj,raw_pose,lead1,lead2)
+        function [obj,control,mu,Sigma] = compute_control(obj,raw_pose,lead1,lead2)
             % compute the control according to current position
             if (strcmp(obj.type,"dphi"))
                 control = obj.compute_dphi(obj.pose,lead1,obj.d,obj.phi);
@@ -43,7 +43,8 @@ classdef DiffDriveFollowerKalman < control
             end
             % estimate pose for control in next step
             ut = [control.vRef;control.wRef]; 
-            [obj.filter,obj.pose] = obj.filter.step(ut,raw_pose);
+            [obj.filter,obj.pose,Sigma] = obj.filter.step(ut,raw_pose);
+            mu = obj.pose;
             %obj.pose = raw_pose;
         end
         

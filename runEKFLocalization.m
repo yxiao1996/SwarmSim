@@ -5,7 +5,7 @@ close all;
 size = 15;
 resolution = 10;
 numObstacles = 0;
-numLandmarks = 6;
+numLandmarks = 5;
 space = 5;
 %p = zeros(size*resolution);
 map_gen = MapGenerate(size,size,space,resolution);
@@ -17,7 +17,7 @@ end
 map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
-numRobots = 2;
+numRobots = 3;
 numSensors = 25;
 sensorRange = 2;
 showTraj = false;

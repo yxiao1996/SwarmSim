@@ -9,6 +9,7 @@ classdef simulation
         controllers
         actuators
         prev_poses
+        hPlot
     end
     
     methods (Abstract)

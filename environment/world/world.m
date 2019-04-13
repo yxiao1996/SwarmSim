@@ -46,7 +46,7 @@ classdef world
                 obj.detectors{i} = detector;
                 % associate landmark detector of each robot
                 camera = ObjectDetector;
-                camera.fieldOfView = 2*pi/3;
+                camera.fieldOfView = pi/2;
                 attachObjectDetector(obj.env,i,camera);
                 obj.cameras{i} = camera;
             end
@@ -68,6 +68,7 @@ classdef world
             obj.landmarks = data;
             numLandmarks = size(data,1);
             color = rand(numLandmarks,3);
+            %color = [1 0 0;0 1 0;0 0 1];
             obj.env.objectColors = color;
         end
         
@@ -97,6 +98,8 @@ classdef world
             for i = 1:obj.numRobots
                 camera = obj.cameras{i};
                 landmark = camera(obj.poses(:,i),obj.landmarks);
+                disp("observed landmarks")
+                disp(landmark);
                 landmarks{i} = landmark;
             end
         end

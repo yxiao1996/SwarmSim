@@ -1,6 +1,6 @@
 classdef EKFLocalizerCorrespondences
-    %EKFLOCALIZERCORRESPONDENCES 此处显示有关此类的摘要
-    %   此处显示详细说明
+    %EKFLOCALIZERCORRESPONDENCES 
+    %
     
     properties
         map
@@ -26,21 +26,33 @@ classdef EKFLocalizerCorrespondences
             mu = mu_bar;
             Sigma = Sigma_bar;
             numLandmarks = size(landmark,1);
-            ct = landmark(:,3);
+            disp(landmark);
             for i = 1:numLandmarks
+                ct = landmark(:,3);
                 rt_i = landmark(i,1);
                 phit_i = landmark(i,2);
                 zt_i = [rt_i;phit_i;landmark(i,3)];
                 j = ct(i);
-                %disp(j);
                 delta_x = obj.map(j,1)-mu_bar(1);
                 delta_y = obj.map(j,2)-mu_bar(2);
                 delta = [delta_x;delta_y];
                 delta_ = [obj.map(j,1)-pose(1);obj.map(j,2)-pose(2)];
+                
                 zt_real_i = [
-                    sqrt(delta_'*delta_);
+                    sqrt(dot(delta_,delta_));
                     obj.angle_diff(atan2(delta_(2),delta_(1)), pose(3));
                 ];
+                assert(j==obj.map(j,3));
+                disp("observed position")
+                disp(zt_i);
+                disp("position on map")
+                disp([obj.map(j,1) obj.map(j,2)]);
+                disp("real relative position")
+                disp(zt_real_i);
+                disp("difference between real and estimate")
+                disp(zt_i(1:2)-zt_real_i);
+                assert(zt_i(1)-zt_real_i(1)<0.0001);
+                % hold on; plot(obj.map(j,1),obj.map(j,2)); hold off;
                 q = delta'*delta;
                 zt_hat_i = [
                     sqrt(q);
@@ -54,11 +66,11 @@ classdef EKFLocalizerCorrespondences
                     %0               0                0 
                 ]/q;
                 Kt_i = Sigma_bar*Ht_i'/(Ht_i*Sigma_bar*Ht_i' + obj.Q(1:2,1:2));
-                disp("*")
-                disp(zt_hat_i(1:2)-zt_real_i);
+                
                 %disp(delta-delta_);
                 %if(~sum(isnan(Kt_i)))
-                %mu = mu + Kt_i*(zt_i(1:2)-zt_hat_i(1:2));
+                mu = mu + Kt_i*(zt_i(1:2)-zt_hat_i(1:2));
+                %mu = mu + Kt_i*(zt_i(1:2)-zt_real_i(1:2));
                 Sigma = Sigma - Kt_i*Ht_i*Sigma_bar;
                 %end
             end

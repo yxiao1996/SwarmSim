@@ -42,6 +42,7 @@ classdef LeaderFollowerNoisySimulation < simulation
             % setup environment physics
             obj.physics = AABB(map,swarmInfo.numRobots,0.25,true);
             obj.prev_poses = swarmInfo.poses;
+            obj.visualize_();
         end
         
         function obj = step(obj)
@@ -61,6 +62,9 @@ classdef LeaderFollowerNoisySimulation < simulation
             pose = poses(:,1);
             controls{1} = ctl.compute_control(pose,readings);
             % control the followers
+            hPlot_ = zeros(obj.numRobots,1);
+            hold on
+            delete(obj.hPlot);
             for i = 2:obj.numRobots
                 ctl = obj.controllers{i};
                 type = obj.form.getType(i);
@@ -69,15 +73,25 @@ classdef LeaderFollowerNoisySimulation < simulation
                 pose = AdditiveGaussian(pose',eye(3)*0.1)'; % add gaussian noise
                 if (strcmp(type,"dphi"))
                     lead = poses(:,leadIdx);
-                    [ctl,controls{i}] = ctl.compute_control(pose,lead,[0;0;0]);
+                    [ctl,controls{i},mu,Sigma] = ctl.compute_control(pose,lead,[0;0;0]);
                 elseif (strcmp(type,"dd"))
                     lead1 = poses(:,leadIdx(1));
                     lead2 = poses(:,leadIdx(2));
-                    [ctl,controls{i}] = ctl.compute_control(pose,lead1,lead2);
+                    [ctl,controls{i},mu,Sigma] = ctl.compute_control(pose,lead1,lead2);
                 end
                 obj.controllers{i} = ctl;
+                hPlot_(i) = obj.draw_ellipse(mu,Sigma);
             end
+            obj.hPlot = hPlot_;
+            hold off
         end
+        
+        function h = draw_ellipse(obj,mu,Sigma)
+            mu_ = mu(1:2);
+            Sigma_ = Sigma(1:2,1:2);
+            h = error_ellipse(Sigma_,mu_);
+        end
+        
     end
 end
 
