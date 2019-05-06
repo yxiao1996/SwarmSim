@@ -35,6 +35,20 @@ prerequisite:
 2. icp(point set mathcing algorithm)
 3. munkres(hungarian algorithm)
    
+how to run the demos
+
+* scripts for running the demo simulations can be found in root folder of this repository. Here is a list of all the demos and their corresponding scripts:
+1. Behavior based control: runBehaviorBased.m
+2. Behavior based control for mapping the environment: runBehaiviorBasedMapping.m
+3. Behavior based swarm mapping in a noisy environment with Kalman filter: runBehaviorBasedNoisyMapping.m
+4. Leader-follower control: runLeaderFollower.m
+5. Leader-follower control with noisy and Kalman filter: runLeaderFollowerNoisy.m
+6. Virtual structure control: runVirtualStructure.m
+7. Extended Kalman filter localization: runEKFLocalization.m
+8. Extended Kalman filter SLAM: runEKFSLAM.m
+
+* To run these scripts, open and run with MATLAB. Don't forget to include the repository in MATLAB search path. 
+
 Reference:
 1. Mobile Robotics Simulation Toolbox: https://www.mathworks.com/matlabcentral/fileexchange/66586-mobile-robotics-simulation-toolbox
 2. M. Anthony Lewis, Kar-Han Tan. High Precision Formation Control of Mobile Robots Using Virtual Structures. Autonomous Robots, 1997.

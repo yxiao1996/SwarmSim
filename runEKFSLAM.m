@@ -4,7 +4,7 @@ close all;
 % generate map for the simulation
 size = 15;
 resolution = 10;
-numObstacles = 0;
+numObstacles = 3;
 numLandmarks = 5;
 space = 5;
 %p = zeros(size*resolution);
@@ -17,7 +17,7 @@ end
 map = robotics.OccupancyGrid(p,resolution);
 
 %% specify some parameters
-numRobots = 2;
+numRobots = 1;
 numSensors = 25;
 sensorRange = 2;
 showTraj = false;

@@ -56,7 +56,7 @@ classdef DiffDriveFollower < control
             psi = obj.compute_psi(d_2,d_3,d_);
             xi = obj.compute_xi(x,y,x_l2,y_l2);
             phi_ = obj.add_angle(psi,xi);
-            control = obj.compute_dphi(pose,lead,d_,pi/3);
+            control = obj.compute_dphi(pose,lead,d_,0);
         end
         
         function control = compute_dphi(obj,pose,lead,d,phi)

@@ -64,7 +64,7 @@ classdef LeaderFollowerNoisySimulation < simulation
             % control the followers
             hPlot_ = zeros(obj.numRobots,1);
             hold on
-            delete(obj.hPlot);
+            %delete(obj.hPlot);
             for i = 2:obj.numRobots
                 ctl = obj.controllers{i};
                 type = obj.form.getType(i);
@@ -80,7 +80,7 @@ classdef LeaderFollowerNoisySimulation < simulation
                     [ctl,controls{i},mu,Sigma] = ctl.compute_control(pose,lead1,lead2);
                 end
                 obj.controllers{i} = ctl;
-                hPlot_(i) = obj.draw_ellipse(mu,Sigma);
+                % hPlot_(i) = obj.draw_ellipse(mu,Sigma);
             end
             obj.hPlot = hPlot_;
             hold off
