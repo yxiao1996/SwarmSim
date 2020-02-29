@@ -2,7 +2,7 @@ classdef RandomWalkSimulation < simulation
     %SIMULATOR discrete-time simulator for multi-robot system
     
     properties
-        prev_poses
+        %prev_poses
     end
     
     methods

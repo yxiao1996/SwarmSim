@@ -31,10 +31,11 @@ classdef world
             for i = 1:obj.numRobots
                 robotInfo = swarmInfo.infos{i};
                 % associate range finders for each robot
-                lidar = LidarSensor;
+                lidar = MultiRobotLidarSensor;
+                lidar.robotIdx = i;
                 lidar.scanAngles = linspace(-pi,pi,robotInfo.numSensors);
                 lidar.maxRange = robotInfo.sensorRange;
-                attachLidarSensor(obj.env,i,lidar); % associate lidar with map
+                attachLidarSensor(obj.env, lidar); % associate lidar with map
                 obj.sensors{i} = lidar;
                 % associate robot detector of each robot
                 detector = RobotDetector(obj.env,i);
@@ -75,9 +76,11 @@ classdef world
         function ranges = readSensors(obj)
             % read sensors at current poses
             ranges = cell(1,obj.numRobots); % empty sensor readings
+            obj.env.Poses = obj.poses;
             for i = 1:obj.numRobots
                 lidar = obj.sensors{i};
-                scans = lidar(obj.poses(:,i));
+                % scans = lidar(obj.poses(:,i));
+                scans = lidar();
                 ranges{i} = scans;
             end
         end

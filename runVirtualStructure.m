@@ -1,7 +1,18 @@
 %% a test script for simulator class
 clear all;
 close all;
-load exampleMap % load example map into workspace
+% generate map for the simulation
+size = 15;
+resolution = 10;
+numObstacles = 2;
+space = 5;
+%p = zeros(size*resolution);
+map_gen = MapGenerate(size,size,space,resolution);
+[p,map_gen] = map_gen.addBounds(2);
+for i = 1:numObstacles
+    [p,map_gen] = map_gen.addRandomObstacle(1.5,0.5);
+end
+map = binaryOccupancyMap(p,resolution);
 
 %% specify some parameters
 numRobots = 5;
@@ -9,7 +20,7 @@ numSensors = 4;
 sensorRange = 4;
 dynamics = "OmniDir";
 showTraj = false;
-initial_poses = (rand(3,numRobots).*[0.25;0.25;0]) + [11;1.8;0];
+initial_poses = 8*(rand(3,numRobots).*[0.5;0.5;0]) + [0.5;0.5;0];
 robotInfos = cell(1,numRobots);
 for i = 1:numRobots
     % differential drive dynamics

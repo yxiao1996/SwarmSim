@@ -10,7 +10,6 @@ classdef VirtualStructureSimulation < simulation
         controller_vs % controller for the virtual structure
         actuator_vs   % actuator for the virtual structure
         deadzone_radius
-        hPlot
     end
     
     methods
@@ -26,10 +25,9 @@ classdef VirtualStructureSimulation < simulation
             obj.VS = obj.compute_VS();
             % plan the trajectory of the virtual structure
             start = mean(swarmInfo.poses,2);
-            goal = [2 2];
+            goal = [12 12];
             map_inf = copy(map);
             inflate(map_inf,1.0);
-            %show(map_inf);
             waypoints = planPRM(map_inf,start,goal);
             obj.waypoints = waypoints;
             obj.controller_vs = DiffDrivePursueWayPoints(waypoints);

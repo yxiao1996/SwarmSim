@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB R2019b"><title>Getting Started with Mobile Robotics Simulation Toolbox</title><style type="text/css">.rtcContent { padding: 30px; } .S0 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 28.8px; min-height: 0px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 24px; font-weight: 400; text-align: left;  }
+.S1 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: left;  }
+.S2 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 20px; min-height: 0px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: 700; text-align: left;  }
+.S3 { margin: 10px 0px 20px; padding-left: 0px; font-family: Helvetica, Arial, sans-serif; font-size: 14px;  }
+.S4 { margin-left: 56px; line-height: 21px; min-height: 0px; text-align: left; white-space: pre-wrap;  }</style></head><body><div class = rtcContent><h1  class = 'S0'><span>Getting Started with Mobile Robotics Simulation Toolbox</span></h1><div  class = 'S1'><span>Copyright 2018-2019 The MathWorks, Inc.</span></div><h2  class = 'S2'><span>Description</span></h2><div  class = 'S1'><span>This toolbox provides utilities for robot simulation and algorithm development. This includes:</span></div><ul  class = 'S3'><li  class = 'S4'><span>2D kinematic models for robot geometries such as differential drive, three, and four-wheeled vehicles, including forward and inverse kinematics</span></li><li  class = 'S4'><span>Configurable lidar and object detector simulators </span></li><li  class = 'S4'><span>Visualization of robotic vehicles and sensors in occupancy grid maps</span></li><li  class = 'S4'><span>MATLAB and Simulink examples and documentation</span></li></ul><h2  class = 'S2'><span>System Requirements</span></h2><div  class = 'S1'><span>This version of the toolbox was developed and tested in MATLAB 9.7 (R2019b).</span></div><div  class = 'S1'><span>Product dependencies are:</span></div><ul  class = 'S3'><li  class = 'S4'><span>MATLAB</span></li><li  class = 'S4'><span>Simulink</span></li><li  class = 'S4'><span>Stateflow</span></li><li  class = 'S4'><span>Robotics System Toolbox</span></li><li  class = 'S4'><span>Control System Toolbox + Model Predictive Control Toolbox (optional)</span></li><li  class = 'S4'><span>Reinforcement Learning Toolbox + Deep Learning Toolbox (optional)</span></li><li  class = 'S4'><span>Simscape + Simscape Multibody (optional)</span></li></ul><h2  class = 'S2'><span>Documentation</span></h2><div  class = 'S1'><span style=' text-decoration: underline;'>Kinematic Models</span></div><ul  class = 'S3'><li  class = 'S4'><a href = "matlab:edit mrsDocDifferentialDrive"><span>Differential Drive</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocTripleOmniwheel"><span>Triple Omniwheel</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocGenericOmniwheel"><span>Generic Omniwheel</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocFourWheelSteer"><span>Four-Wheel Steering</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocFourWheelMecanum"><span>Four-Wheel Mecanum</span></a></li></ul><div  class = 'S1'><span style=' text-decoration: underline;'>Environment Models</span></div><ul  class = 'S3'><li  class = 'S4'><a href = "matlab:edit mrsDocVisualizer2D"><span>Robot Visualizer</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocMultiRobotEnv"><span>Multi-Robot Environment</span></a></li></ul><div  class = 'S1'><span style=' text-decoration: underline;'>Sensor Models</span></div><ul  class = 'S3'><li  class = 'S4'><a href = "matlab:edit mrsDocLidarSensor"><span>Lidar Sensor</span></a></li><li  class = 'S4'><a href = "matlab: edit mrsDocMultiRobotLidarSensor"><span>Multi-Robot Lidar Sensor</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocObjectDetector"><span>Object Detector</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDocRobotDetector"><span>Robot Detector</span></a></li></ul><h2  class = 'S2'><span>Examples</span></h2><div  class = 'S1'><span>For simple examples outlining usage of individual models, sensors, or visualizers, please refer to the documentation links above.</span></div><div  class = 'S1'><span>Below is a list of all the application examples, which can be found in the </span><span style=' font-family: monospace;'>examples</span><span> directory of the toolbox.</span></div><div  class = 'S1'><span style=' text-decoration: underline;'>MATLAB Examples</span></div><ul  class = 'S3'><li  class = 'S4'><a href = "matlab:edit mrsDiffDrivePurePursuit"><span>Waypoint following using the Pure Pursuit Algorithm (Differential Drive)</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsFourWheelPurePursuit"><span>Waypoint following using the Pure Pursuit Algorithm (Four-Wheel Steering)</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDiffDriveNavigation"><span>Path planning and following of a differential drive robot</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsDiffDrivePathFollowing"><span>Path following and obstacle avoidance of a differential drive robot</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsSwarmTeams"><span>Multi-robot swarm behavior</span></a></li><li  class = 'S4'><a href = "matlab:edit mrsOmniwheelMPC"><span>Model Predictive Control of three-wheel omniwheel robot</span></a></li></ul><div  class = 'S1'><span style=' text-decoration: underline;'>Simulink Examples</span></div><ul  class = 'S3'><li  class = 'S4'><a href = "matlab:mrsDiffDrivePurePursuitModel"><span>Waypoint following using the Pure Pursuit Algorithm (Differential Drive)</span></a></li><li  class = 'S4'><a href = "matlab:mrsFourWheelPurePursuitModel"><span>Waypoint following using the Pure Pursuit Algorithm (Four-Wheel Steering)</span></a></li><li  class = 'S4'><a href = "matlab:mrsDiffDriveWaypointLogicModel"><span>Waypoint following using supervisory logic</span></a></li><li  class = 'S4'><a href = "matlab:mrsDiffDrivePathFollowingModel"><span>Waypoint following and obstacle avoidance</span></a></li><li  class = 'S4'><a href = "matlab:mrsObjectTrackingModel"><span>Object tracking logic</span></a></li><li  class = 'S4'><a href = "matlab:mrsMultiRobotAvoidance"><span>Multi-robot obstacle avoidance</span></a></li><li  class = 'S4'><a href = "matlab:mrsOmniwheelMPCModel"><span>Model Predictive Control of three-wheel omniwheel robot</span></a></li></ul><div  class = 'S1'><span style=' text-decoration: underline;'>Application Examples</span></div><ul  class = 'S3'><li  class = 'S4'><a href = "matlab:multiRobotSoccer"><span>Robot Soccer Simulation</span></a></li><li  class = 'S4'><a href = "matlab:navBehaviorWithRL"><span>Navigation Behavior with Reinforcement Learning Based Obstacle Avoidance</span></a></li></ul></div>
+<br>
+<!-- 
+##### SOURCE BEGIN #####
+%% Getting Started with Mobile Robotics Simulation Toolbox
+% Copyright 2018-2019 The MathWorks, Inc.
+%% Description
+% This toolbox provides utilities for robot simulation and algorithm development. 
+% This includes:
+%% 
+% * 2D kinematic models for robot geometries such as differential drive, three, 
+% and four-wheeled vehicles, including forward and inverse kinematics
+% * Configurable lidar and object detector simulators 
+% * Visualization of robotic vehicles and sensors in occupancy grid maps
+% * MATLAB and Simulink examples and documentation
+%% System Requirements
+% This version of the toolbox was developed and tested in MATLAB 9.7 (R2019b).
+% 
+% Product dependencies are:
+%% 
+% * MATLAB
+% * Simulink
+% * Stateflow
+% * Robotics System Toolbox
+% * Control System Toolbox + Model Predictive Control Toolbox (optional)
+% * Reinforcement Learning Toolbox + Deep Learning Toolbox (optional)
+% * Simscape + Simscape Multibody (optional)
+%% Documentation
+% Kinematic Models
+%% 
+% * <matlab:edit mrsDocDifferentialDrive Differential Drive>
+% * <matlab:edit mrsDocTripleOmniwheel Triple Omniwheel>
+% * <matlab:edit mrsDocGenericOmniwheel Generic Omniwheel>
+% * <matlab:edit mrsDocFourWheelSteer Four-Wheel Steering>
+% * <matlab:edit mrsDocFourWheelMecanum Four-Wheel Mecanum>
+%% 
+% Environment Models
+%% 
+% * <matlab:edit mrsDocVisualizer2D Robot Visualizer>
+% * <matlab:edit mrsDocMultiRobotEnv Multi-Robot Environment>
+%% 
+% Sensor Models
+%% 
+% * <matlab:edit mrsDocLidarSensor Lidar Sensor>
+% * <matlab: edit mrsDocMultiRobotLidarSensor Multi-Robot Lidar Sensor>
+% * <matlab:edit mrsDocObjectDetector Object Detector>
+% * <matlab:edit mrsDocRobotDetector Robot Detector>
+%% Examples
+% For simple examples outlining usage of individual models, sensors, or visualizers, 
+% please refer to the documentation links above.
+% 
+% Below is a list of all the application examples, which can be found in the 
+% |examples| directory of the toolbox.
+%% 
+% MATLAB Examples
+%% 
+% * <matlab:edit mrsDiffDrivePurePursuit Waypoint following using the Pure Pursuit 
+% Algorithm (Differential Drive)>
+% * <matlab:edit mrsFourWheelPurePursuit Waypoint following using the Pure Pursuit 
+% Algorithm (Four-Wheel Steering)>
+% * <matlab:edit mrsDiffDriveNavigation Path planning and following of a differential 
+% drive robot>
+% * <matlab:edit mrsDiffDrivePathFollowing Path following and obstacle avoidance 
+% of a differential drive robot>
+% * <matlab:edit mrsSwarmTeams Multi-robot swarm behavior>
+% * <matlab:edit mrsOmniwheelMPC Model Predictive Control of three-wheel omniwheel 
+% robot>
+%% 
+% Simulink Examples
+%% 
+% * <matlab:mrsDiffDrivePurePursuitModel Waypoint following using the Pure Pursuit 
+% Algorithm (Differential Drive)>
+% * <matlab:mrsFourWheelPurePursuitModel Waypoint following using the Pure Pursuit 
+% Algorithm (Four-Wheel Steering)>
+% * <matlab:mrsDiffDriveWaypointLogicModel Waypoint following using supervisory 
+% logic>
+% * <matlab:mrsDiffDrivePathFollowingModel Waypoint following and obstacle avoidance>
+% * <matlab:mrsObjectTrackingModel Object tracking logic>
+% * <matlab:mrsMultiRobotAvoidance Multi-robot obstacle avoidance>
+% * <matlab:mrsOmniwheelMPCModel Model Predictive Control of three-wheel omniwheel 
+% robot>
+%% 
+% Application Examples
+%% 
+% * <matlab:multiRobotSoccer Robot Soccer Simulation>
+% * <matlab:navBehaviorWithRL Navigation Behavior with Reinforcement Learning 
+% Based Obstacle Avoidance>
+##### SOURCE END #####
+--></body></html>

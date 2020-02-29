@@ -12,7 +12,7 @@ map_gen = MapGenerate(size,size,space,resolution);
 for i = 1:numObstacles
     [p,map_gen] = map_gen.addRandomObstacle(1.5,0.5);
 end
-map = robotics.OccupancyGrid(p,resolution);
+map = binaryOccupancyMap(p,resolution);
 
 %% specify some parameters
 form = VShapeFormation();%DiamondFormation();
