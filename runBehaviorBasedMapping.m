@@ -13,7 +13,7 @@ for i = 1:numObstacles
     %p = add_random_circle(p);
     [p,map_gen] = map_gen.addRandomObstacle(1.0,0.5);
 end
-map = robotics.OccupancyGrid(p,resolution);
+map = binaryOccupancyMap(p,resolution);
 
 %% specify some parameters
 numRobots = 3;
