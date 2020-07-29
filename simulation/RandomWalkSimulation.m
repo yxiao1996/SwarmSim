@@ -20,7 +20,8 @@ classdef RandomWalkSimulation < simulation
                 obj.actuators{i} = actuatorDiffDrive(R,L);
             end
             obj.physics = AABB(map,params.numRobots,0.25,true);
-            obj.prev_poses = params.initial_poses;
+            obj.prev_poses = params.poses;
+            
         end
         
         function obj = step_(obj) % single part implementation
