@@ -13,7 +13,7 @@ TODO:
 
 ### Introduction
 
-There are wo theoretical views on the control of multiple robot systems: centralized systems and decentralized systems. 
+There are two theoretical views on the control of multiple robot systems: centralized systems and decentralized systems. 
 
 In a centralized system, a central unit is responsible for making decision for indivisuals and monitoring the accomplishment of the missoin. Communication only happen between central unit and indibisual, not between individuals. 
 
